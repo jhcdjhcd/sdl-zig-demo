@@ -1,6 +1,6 @@
-const Builder = @import("std").build.Builder;
+const std = @import("std");
 
-pub fn build(b: *Builder) void {
+pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
@@ -10,7 +10,7 @@ pub fn build(b: *Builder) void {
         .target = target,
         .optimize = optimize,
     });
-    if (target.isNativeOs() and target.getOsTag() == .linux) {
+    if (target.query.isNativeOs() and target.result.os.tag == .linux) {
         // The SDL package doesn't work for Linux yet, so we rely on system
         // packages for now.
         exe.linkSystemLibrary("SDL2");
